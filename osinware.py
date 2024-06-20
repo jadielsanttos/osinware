@@ -3,14 +3,14 @@ import pyfiglet
 import json
 import requests
 
-print(Fore.RED+pyfiglet.figlet_format("OSINWARE"))
-print(Fore.WHITE+".:::[+] author: th3 want3d")
-print(Fore.WHITE+".:::[+] version: 1.0")
-print(Fore.YELLOW+".:::[+] github: https://github.com/jadielsanttos/osinware\n")
+print(Fore.GREEN+pyfiglet.figlet_format("OsinWare"), end="")
+print(Fore.WHITE+"      :::[+] author: th3 want3d")
+print(Fore.WHITE+"      :::[+] version: 1.0\n")
 
-print(Fore.BLUE+"[1] ip information gathering\n")
+print(Fore.BLUE+"[1] find data from IP")
+print(Fore.BLUE+"[2] whats my IP?\n")
 
-api_key = "45629209d7804ab7adb3460cf8582ef0"
+api_key = "nokey"
 menu_option = input(Fore.WHITE+"Choose an option > ")
 
 def get_information_by_ip(api_key):
@@ -19,6 +19,12 @@ def get_information_by_ip(api_key):
     dictionary = json.loads(response.content)
 
     return dictionary
+
+def get_information_of_my_ip(api_key):
+    response = requests.get("https://api.ipgeolocation.io/ipgeo?apiKey="+api_key)
+    dictionary = json.loads(response.content)
+    
+    return dictionary['ip']
 
 def generate_dynamic_dash(value):
     string = ""
@@ -42,4 +48,12 @@ def generate_table_result_by_ip(ip_data):
     print(Fore.WHITE+"[+] capital: "+ip_data['country_capital'])
     print(Fore.YELLOW+"#----------"+generate_dynamic_dash(coords)+"---#")
 
-generate_table_result_by_ip(get_information_by_ip(api_key))
+
+my_ip = get_information_of_my_ip(api_key)
+
+if menu_option == "1":
+    generate_table_result_by_ip(get_information_by_ip(api_key))
+else:
+    print(Fore.YELLOW+"#-------------"+generate_dynamic_dash(my_ip)+"---#")
+    print(Fore.WHITE+"[+] your IP is: "+my_ip)
+    print(Fore.YELLOW+"#-------------"+generate_dynamic_dash(my_ip)+"---#")
