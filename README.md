@@ -1,3 +1,3 @@
 # OSINWARE
 
-<img src="./image.png">
+<img src="./assets/img.png">

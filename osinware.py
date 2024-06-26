@@ -30,12 +30,16 @@ def start(menu_option):
         return login(username, password)
     
 def get_data_by_target_ip():
-    api_key = input("Enter your api key > ")
+    file = open("osinware.conf", mode="r")
+
+    api_key = file.read().split(":")[1]
 
     ipgeolocation.get_information_by_ip(api_key)
 
-if menu_option != '1' and menu_option != '2':
+if menu_option == '1' or menu_option == '2':
+    print(start(menu_option))
+elif menu_option == '3':
     get_data_by_target_ip()
 else:
-    print(Fore.BLUE+start(menu_option))
+    print(Fore.RED+"[!] Sorry, invalid option...")
     
